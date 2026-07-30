@@ -1,0 +1,167 @@
+[
+  {
+    "id": "claire",
+    "nombre": "Claire",
+    "outfit": [
+      {
+        "id": "peluca",
+        "nombre": "Peluca",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "chaqueta",
+        "nombre": "Chaqueta",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "camiseta",
+        "nombre": "Camiseta",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "pantalones",
+        "nombre": "Pantalones",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "botas",
+        "nombre": "Botas",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "arma-replica",
+        "nombre": "Arma (réplica)",
+        "completado": false,
+        "fechaCompletado": null
+      }
+    ],
+    "photoshoots": []
+  },
+  {
+    "id": "jill",
+    "nombre": "Jill",
+    "outfit": [
+      {
+        "id": "peluca",
+        "nombre": "Peluca",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "top",
+        "nombre": "Top",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "pantalones",
+        "nombre": "Pantalones",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "botas",
+        "nombre": "Botas",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "holster",
+        "nombre": "Holster",
+        "completado": false,
+        "fechaCompletado": null
+      }
+    ],
+    "photoshoots": []
+  },
+  {
+    "id": "ashley",
+    "nombre": "Ashley",
+    "outfit": [
+      {
+        "id": "peluca",
+        "nombre": "Peluca",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "vestido",
+        "nombre": "Vestido",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "zapatos",
+        "nombre": "Zapatos",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "chaleco",
+        "nombre": "Chaleco",
+        "completado": false,
+        "fechaCompletado": null
+      }
+    ],
+    "photoshoots": [
+      {
+        "id": "la-laboral",
+        "titulo": "La Laboral",
+        "fecha": "pendiente",
+        "notas": "",
+        "ubicacion": "La Laboral, Gijón",
+        "mapsUrl": "https://maps.app.goo.gl/ooeqZPKHsYCjRNAz9",
+        "estado": "planificado",
+        "mapsEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4011.701391010507!2d-5.614514!3d43.5243331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd367b1a200bd50f%3A0x88711636275e0532!2sLaboral%20Ciudad%20de%20la%20Cultura!5e1!3m2!1sen!2ses!4v1785420544766!5m2!1sen!2ses"
+      }
+    ]
+  },
+  {
+    "id": "chloe",
+    "nombre": "Chloe",
+    "outfit": [
+      {
+        "id": "peluca-azul",
+        "nombre": "Peluca azul",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "chaqueta",
+        "nombre": "Chaqueta",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "camiseta",
+        "nombre": "Camiseta",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "pantalones",
+        "nombre": "Pantalones",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "botas",
+        "nombre": "Botas",
+        "completado": false,
+        "fechaCompletado": null
+      },
+      {
+        "id": "gorra",
+        "nombre": "Gorra",
+        "completado": false,
+        "fechaCompletado": null
+      }
+    ],
+    "photoshoots": []
+  }
+]

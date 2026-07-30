@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Bucket list personal estilo cuaderno underground">
+  <title>Bucket List — Cuaderno Underground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="desk-noise" aria-hidden="true"></div>
+
+  <main class="notebook" aria-label="Cuaderno de bucket list">
+    <aside class="margin-doodles" aria-hidden="true">
+      <span>✦</span><span>☾</span><span>⚡</span><span>♡</span>
+    </aside>
+
+    <header class="notebook-header">
+      <div>
+        <p class="eyebrow">PRIVATE NOTES / DO NOT READ</p>
+        <h1>My Bucket List</h1>
+        <p class="subtitle">cosplays, lugares y cosas que todavía quiero vivir</p>
+      </div>
+      <section class="global-progress" aria-live="polite">
+        <span class="stamp stamp-blue">PROGRESS</span>
+        <strong id="globalProgressText">0 / 0</strong>
+        <div class="progress-track"><span id="globalProgressBar"></span></div>
+      </section>
+    </header>
+
+    <nav class="tabs" aria-label="Secciones principales">
+      <button class="tab active" data-view="cosplays" aria-selected="true">Cosplays</button>
+      <button class="tab" data-view="actividades" aria-selected="false">Actividades</button>
+    </nav>
+
+    <section class="toolbar" aria-label="Herramientas">
+      <div class="toolbar-left">
+        <button id="backButton" class="paper-button hidden" type="button">← Back</button>
+        <select id="activityFilter" class="paper-select hidden" aria-label="Filtrar actividades por tipo">
+          <option value="todos">Todos los tipos</option>
+          <option value="parque">Parques</option>
+          <option value="comics">Comics</option>
+          <option value="ciudad">Ciudad</option>
+          <option value="evento">Eventos</option>
+          <option value="otro">Otros</option>
+        </select>
+      </div>
+      <div class="toolbar-actions">
+        <button id="addLocationButton" class="paper-button hidden" type="button">+ Ubicación</button>
+        <button id="exportButton" class="paper-button subtle" type="button">Exportar JSON</button>
+        <label class="paper-button subtle file-button">Importar JSON<input id="importInput" type="file" accept="application/json"></label>
+      </div>
+    </section>
+
+    <section id="app" class="page-content page-turn" aria-live="polite"></section>
+
+    <footer class="page-footer">
+      <button id="previousButton" class="nav-button" type="button">Previous</button>
+      <span id="pageNumber">Página 1/2</span>
+      <button id="nextButton" class="nav-button" type="button">Next</button>
+    </footer>
+  </main>
+
+  <dialog id="formDialog" class="form-dialog">
+    <form id="dynamicForm" method="dialog">
+      <div class="dialog-heading">
+        <h2 id="dialogTitle">Nueva nota</h2>
+        <button id="closeDialogButton" class="icon-button" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <div id="formFields"></div>
+      <div class="dialog-actions">
+        <button class="paper-button subtle" value="cancel" type="button" id="cancelDialogButton">Cancelar</button>
+        <button class="paper-button" value="default" type="submit">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

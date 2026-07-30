@@ -1,0 +1,45 @@
+[
+  {
+    "id": "madrid",
+    "nombre": "Madrid",
+    "tipoUbicacion": "ciudad",
+    "actividades": [
+      { "id": "parque-atracciones-madrid", "nombre": "Parque de Atracciones de Madrid", "completado": false, "fecha": null, "notas": "", "enlace": null, "tipo": "parque" },
+      { "id": "warner", "nombre": "Warner Bros Park", "completado": false, "fecha": null, "notas": "", "enlace": null, "tipo": "parque" }
+    ]
+  },
+  {
+    "id": "portaventura",
+    "nombre": "PortAventura",
+    "tipoUbicacion": "parque",
+    "actividades": [
+      { "id": "visitar-portaventura", "nombre": "Visitar PortAventura", "completado": false, "fecha": null, "notas": "", "enlace": null, "tipo": "parque" }
+    ]
+  },
+  {
+    "id": "terra-mitica",
+    "nombre": "Terra Mítica",
+    "tipoUbicacion": "parque",
+    "actividades": [
+      { "id": "visitar-terra-mitica", "nombre": "Visitar Terra Mítica", "completado": false, "fecha": null, "notas": "", "enlace": null, "tipo": "parque" }
+    ]
+  },
+  { "id": "florencia", "nombre": "Florencia", "tipoUbicacion": "ciudad", "actividades": [] },
+  {
+    "id": "lucca",
+    "nombre": "Lucca",
+    "tipoUbicacion": "ciudad",
+    "actividades": [
+      { "id": "lucca-comics", "nombre": "Lucca Comics", "completado": false, "fecha": null, "notas": "", "enlace": null, "tipo": "comics" }
+    ]
+  },
+  { "id": "milan", "nombre": "Milán", "tipoUbicacion": "ciudad", "actividades": [] },
+  {
+    "id": "verona",
+    "nombre": "Verona",
+    "tipoUbicacion": "ciudad",
+    "actividades": [
+      { "id": "parque-atracciones-verona", "nombre": "Parque de Atracciones de Verona", "completado": false, "fecha": null, "notas": "", "enlace": null, "tipo": "parque" }
+    ]
+  }
+]
