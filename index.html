@@ -31,9 +31,10 @@
       </section>
     </header>
 
-    <nav class="tabs" aria-label="Secciones principales">
-      <button class="tab active" data-view="cosplays" aria-selected="true">Cosplays</button>
-      <button class="tab" data-view="actividades" aria-selected="false">Actividades</button>
+    <nav class="tabs main-tabs" aria-label="Secciones principales" role="tablist">
+      <button class="tab active" data-view="cosplays" aria-selected="true" role="tab">Cosplays</button>
+      <button class="tab" data-view="actividades" aria-selected="false" role="tab">Actividades</button>
+      <button class="tab" data-view="localizaciones" aria-selected="false" role="tab">Localizaciones</button>
     </nav>
 
     <section class="toolbar" aria-label="Herramientas">
@@ -47,9 +48,18 @@
           <option value="evento">Eventos</option>
           <option value="otro">Otros</option>
         </select>
+        <select id="placeFilter" class="paper-select hidden" aria-label="Filtrar localizaciones por tipo">
+          <option value="todos">Todos los lugares</option>
+          <option value="photoshoot">Photoshoot</option>
+          <option value="urbex">Urbex</option>
+          <option value="ferrocarril">Ferrocarril</option>
+          <option value="visitados">Visitados</option>
+        </select>
       </div>
       <div class="toolbar-actions">
+        <button id="addCosplayButton" class="paper-button" type="button">+ Cosplay</button>
         <button id="addLocationButton" class="paper-button hidden" type="button">+ Ubicación</button>
+        <button id="addPlaceButton" class="paper-button hidden" type="button">+ Localización</button>
         <button id="exportButton" class="paper-button subtle" type="button">Exportar JSON</button>
         <label class="paper-button subtle file-button">Importar JSON<input id="importInput" type="file" accept="application/json"></label>
       </div>
@@ -59,7 +69,7 @@
 
     <footer class="page-footer">
       <button id="previousButton" class="nav-button" type="button">Previous</button>
-      <span id="pageNumber">Página 1/2</span>
+      <span id="pageNumber">Página 1/3</span>
       <button id="nextButton" class="nav-button" type="button">Next</button>
     </footer>
   </main>

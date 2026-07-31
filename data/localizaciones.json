@@ -1,0 +1,72 @@
+[
+  {
+    "id": "la-laboral",
+    "nombre": "Laboral Ciudad de la Cultura",
+    "zona": "Gijón",
+    "tipos": ["photoshoot"],
+    "estado": "pendiente",
+    "visitado": false,
+    "fechaVisita": null,
+    "notas": "Arquitectura monumental, patios, piedra y líneas simétricas.",
+    "advertencias": "Comprobar horarios y restricciones para sesiones fotográficas.",
+    "ideas": "Ashley y sesiones de estética clásica o académica.",
+    "mapsUrl": "https://maps.app.goo.gl/ooeqZPKHsYCjRNAz9",
+    "embedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4011.701391010507!2d-5.614514!3d43.5243331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd367b1a200bd50f%3A0x88711636275e0532!2sLaboral%20Ciudad%20de%20la%20Cultura!5e1!3m2!1sen!2ses!4v1785420544766!5m2!1sen!2ses"
+  },
+  {
+    "id": "fuso-de-la-reina",
+    "nombre": "Fuso de la Reina",
+    "zona": "Oviedo",
+    "tipos": ["photoshoot", "urbex"],
+    "estado": "por-investigar",
+    "visitado": false,
+    "fechaVisita": null,
+    "notas": "Entorno ferroviario y natural con posibilidades para sesiones exteriores.",
+    "advertencias": "Confirmar accesos permitidos y evitar cualquier zona ferroviaria activa o cerrada.",
+    "ideas": "Estética postapocalíptica, survival y urbana.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Fuso+de+la+Reina+Asturias",
+    "embedUrl": "https://www.google.com/maps?q=Fuso%20de%20la%20Reina%2C%20Asturias&output=embed"
+  },
+  {
+    "id": "discoteca-jardin",
+    "nombre": "Discoteca Jardín",
+    "zona": "Asturias",
+    "tipos": ["photoshoot", "urbex"],
+    "estado": "por-investigar",
+    "visitado": false,
+    "fechaVisita": null,
+    "notas": "Posible localización de estética abandonada y decadente.",
+    "advertencias": "Verificar ubicación, propiedad, permisos y estado estructural antes de acercarse.",
+    "ideas": "Terror, Resident Evil y estética underground.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Discoteca+Jardin+Asturias",
+    "embedUrl": "https://www.google.com/maps?q=Discoteca%20Jard%C3%ADn%2C%20Asturias&output=embed"
+  },
+  {
+    "id": "lieres-vias",
+    "nombre": "Lieres — vías de tren",
+    "zona": "Siero",
+    "tipos": ["photoshoot", "ferrocarril"],
+    "estado": "por-investigar",
+    "visitado": false,
+    "fechaVisita": null,
+    "notas": "Zona ferroviaria para estudiar como fondo fotográfico.",
+    "advertencias": "No entrar ni fotografiar sobre vías activas. Buscar únicamente espacios públicos y seguros.",
+    "ideas": "Road trip, western moderno o estética industrial.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lieres+Siero+Asturias",
+    "embedUrl": "https://www.google.com/maps?q=Lieres%2C%20Siero%2C%20Asturias&output=embed"
+  },
+  {
+    "id": "perlora",
+    "nombre": "Ciudad Residencial de Perlora",
+    "zona": "Carreño",
+    "tipos": ["urbex", "photoshoot"],
+    "estado": "pendiente",
+    "visitado": false,
+    "fechaVisita": null,
+    "notas": "Arquitectura singular, costa y espacios con aspecto detenido en el tiempo.",
+    "advertencias": "Respetar cierres, señalización, propiedades y edificios no habilitados.",
+    "ideas": "Life is Strange, nostalgia, verano abandonado y retrato editorial.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ciudad+Residencial+de+Perlora+Asturias",
+    "embedUrl": "https://www.google.com/maps?q=Ciudad%20Residencial%20de%20Perlora%2C%20Asturias&output=embed"
+  }
+]

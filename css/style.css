@@ -111,6 +111,8 @@ h1 { margin: 2px 0 0; font: 700 clamp(3rem, 8vw, 6.4rem)/.78 "Caveat", cursive; 
 .progress-track span { display: block; width: 0; height: 100%; background: var(--blue); transition: width .35s ease; }
 
 .tabs { display: flex; gap: 8px; margin-top: 18px; }
+.main-tabs { align-items: flex-end; }
+.main-tabs .tab { flex: 1 1 0; min-width: 135px; text-align: center; }
 .tab {
   border: 0;
   padding: 8px 22px 6px;
@@ -258,3 +260,22 @@ input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--blue); }
   .tabs { overflow-x: auto; padding-bottom: 4px; }
   .page-footer { grid-template-columns: auto 1fr auto; }
 }
+
+.tab:nth-child(3) { background: #a9c9d8; transform: rotate(-.5deg); }
+.places-grid { display: grid; gap: 18px; }
+.place-card { border: 1px solid rgba(38,49,66,.38); background: rgba(255,255,255,.76); box-shadow: 5px 7px 0 rgba(58,45,27,.18); overflow: hidden; }
+.place-card summary { display: flex; justify-content: space-between; gap: 14px; align-items: center; padding: 16px 18px; cursor: pointer; background: rgba(242,220,116,.5); }
+.place-card summary strong { display: block; font: 700 1.65rem "Caveat", cursive; }
+.place-card summary small { display: block; color: var(--ink-soft); }
+.place-body { padding: 18px; }
+.place-tags { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.place-tags span { padding: 2px 8px; border: 1px solid var(--blue); color: var(--blue); background: rgba(169,201,216,.25); font-size: .85rem; transform: rotate(-1deg); }
+.place-status-row, .place-actions { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+.place-status-row label { display: flex; align-items: center; gap: 8px; font-weight: 700; }
+.warning-note { padding: 10px 12px; border-left: 4px solid var(--red); background: rgba(180,76,76,.08); }
+.place-map iframe { height: 320px; }
+.place-actions { justify-content: flex-start; margin-top: 12px; }
+.map-button { display: inline-block; text-decoration: none; }
+.place-card.completed summary strong { text-decoration: line-through 2px var(--red); }
+.place-card.completed::after { content: "VISITED"; position: absolute; }
+@media (max-width: 620px) { .place-card summary { align-items: flex-start; flex-direction: column; } .place-tags { justify-content: flex-start; } .place-map iframe { height: 250px; } }

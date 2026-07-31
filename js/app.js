@@ -3,8 +3,11 @@ const STORAGE_KEY = "bucketListNotebookStateV1";
 const app = document.querySelector("#app");
 const tabs = [...document.querySelectorAll(".tab")];
 const activityFilter = document.querySelector("#activityFilter");
+const placeFilter = document.querySelector("#placeFilter");
 const backButton = document.querySelector("#backButton");
+const addCosplayButton = document.querySelector("#addCosplayButton");
 const addLocationButton = document.querySelector("#addLocationButton");
+const addPlaceButton = document.querySelector("#addPlaceButton");
 const previousButton = document.querySelector("#previousButton");
 const nextButton = document.querySelector("#nextButton");
 const pageNumber = document.querySelector("#pageNumber");
@@ -24,8 +27,10 @@ let state = {
   currentView: "cosplays",
   selectedCosplayId: null,
   activityFilter: "todos",
+  placeFilter: "todos",
   cosplays: [],
-  ubicaciones: []
+  ubicaciones: [],
+  localizaciones: []
 };
 
 let activeFormHandler = null;
@@ -38,13 +43,20 @@ async function init() {
     if (saved) {
       state = { ...state, ...JSON.parse(saved) };
     } else {
-      const [cosplaysResponse, actividadesResponse] = await Promise.all([
+      const [cosplaysResponse, actividadesResponse, localizacionesResponse] = await Promise.all([
         fetch("data/cosplays.json"),
-        fetch("data/actividades.json")
+        fetch("data/actividades.json"),
+        fetch("data/localizaciones.json")
       ]);
-      if (!cosplaysResponse.ok || !actividadesResponse.ok) throw new Error("No se pudieron cargar los datos iniciales.");
+      if (!cosplaysResponse.ok || !actividadesResponse.ok || !localizacionesResponse.ok) throw new Error("No se pudieron cargar los datos iniciales.");
       state.cosplays = await cosplaysResponse.json();
       state.ubicaciones = await actividadesResponse.json();
+      state.localizaciones = await localizacionesResponse.json();
+      persist();
+    }
+    if (!Array.isArray(state.localizaciones) || !state.localizaciones.length) {
+      const response = await fetch("data/localizaciones.json");
+      if (response.ok) state.localizaciones = await response.json();
       persist();
     }
     bindEvents();
@@ -60,7 +72,10 @@ function bindEvents() {
   nextButton.addEventListener("click", navigateNext);
   backButton.addEventListener("click", () => { state.selectedCosplayId = null; render(); });
   activityFilter.addEventListener("change", event => { state.activityFilter = event.target.value; persist(); render(); });
+  placeFilter.addEventListener("change", event => { state.placeFilter = event.target.value; persist(); render(); });
+  addCosplayButton.addEventListener("click", openCosplayForm);
   addLocationButton.addEventListener("click", openLocationForm);
+  addPlaceButton.addEventListener("click", () => openPlaceForm());
   exportButton.addEventListener("click", exportState);
   importInput.addEventListener("change", importState);
   closeDialogButton.addEventListener("click", closeDialog);
@@ -76,8 +91,9 @@ function switchView(view) {
   render();
 }
 
-function navigatePrevious() { switchView(state.currentView === "cosplays" ? "actividades" : "cosplays"); }
-function navigateNext() { switchView(state.currentView === "cosplays" ? "actividades" : "cosplays"); }
+const viewOrder = ["cosplays", "actividades", "localizaciones"];
+function navigatePrevious() { const index = viewOrder.indexOf(state.currentView); switchView(viewOrder[(index - 1 + viewOrder.length) % viewOrder.length]); }
+function navigateNext() { const index = viewOrder.indexOf(state.currentView); switchView(viewOrder[(index + 1) % viewOrder.length]); }
 
 function render() {
   tabs.forEach(tab => {
@@ -87,17 +103,22 @@ function render() {
   });
 
   activityFilter.value = state.activityFilter;
+  placeFilter.value = state.placeFilter;
   activityFilter.classList.toggle("hidden", state.currentView !== "actividades");
+  placeFilter.classList.toggle("hidden", state.currentView !== "localizaciones");
+  addCosplayButton.classList.toggle("hidden", state.currentView !== "cosplays" || Boolean(state.selectedCosplayId));
   addLocationButton.classList.toggle("hidden", state.currentView !== "actividades");
+  addPlaceButton.classList.toggle("hidden", state.currentView !== "localizaciones");
   backButton.classList.toggle("hidden", !(state.currentView === "cosplays" && state.selectedCosplayId));
-  pageNumber.textContent = `Página ${state.currentView === "cosplays" ? 1 : 2}/2`;
+  pageNumber.textContent = `Página ${viewOrder.indexOf(state.currentView) + 1}/3`;
 
   app.classList.remove("page-turn");
   void app.offsetWidth;
   app.classList.add("page-turn");
 
   if (state.currentView === "cosplays") renderCosplays();
-  else renderActivities();
+  else if (state.currentView === "actividades") renderActivities();
+  else renderPlaces();
 
   renderGlobalProgress();
 }
@@ -268,13 +289,96 @@ function renderActivities() {
   }));
 }
 
+function renderPlaces() {
+  const places = state.localizaciones.filter(place => {
+    if (state.placeFilter === "todos") return true;
+    if (state.placeFilter === "visitados") return place.visitado;
+    return place.tipos.includes(state.placeFilter);
+  });
+  const visited = state.localizaciones.filter(place => place.visitado).length;
+  app.innerHTML = `
+    <div class="section-heading">
+      <div><h2>Localizaciones</h2><p>${visited}/${state.localizaciones.length} lugares visitados · ideas para photoshoot y urbex en Asturias</p></div>
+    </div>
+    <div class="places-grid">
+      ${places.map(place => `
+        <details class="place-card ${place.visitado ? "completed" : ""}">
+          <summary>
+            <div><strong>${escapeHtml(place.nombre)}</strong><small>${escapeHtml(place.zona || "Asturias")}</small></div>
+            <div class="place-tags">${place.tipos.map(type => `<span>${escapeHtml(type)}</span>`).join("")}</div>
+          </summary>
+          <div class="place-body">
+            <div class="place-status-row">
+              <label><input class="place-check" type="checkbox" data-id="${escapeAttr(place.id)}" ${place.visitado ? "checked" : ""}> Visitado</label>
+              <span class="status">${escapeHtml(place.estado)}</span>
+            </div>
+            ${place.notas ? `<p><strong>Notas:</strong> ${escapeHtml(place.notas)}</p>` : ""}
+            ${place.ideas ? `<p><strong>Ideas:</strong> ${escapeHtml(place.ideas)}</p>` : ""}
+            ${place.advertencias ? `<p class="warning-note"><strong>Acceso y seguridad:</strong> ${escapeHtml(place.advertencias)}</p>` : ""}
+            <div class="map-preview place-map"><iframe src="${safeUrl(place.embedUrl || `https://www.google.com/maps?q=${encodeURIComponent(place.nombre + ", " + place.zona + ", Asturias")}&output=embed`)}" title="Mapa de ${escapeAttr(place.nombre)}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+            <div class="place-actions">
+              <a class="paper-button map-button" href="${safeUrl(place.mapsUrl)}" target="_blank" rel="noopener">Abrir en Google Maps ↗</a>
+              <button class="paper-button subtle edit-place" data-id="${escapeAttr(place.id)}" type="button">Editar</button>
+              <button class="paper-button subtle delete-place" data-id="${escapeAttr(place.id)}" type="button">Eliminar</button>
+            </div>
+          </div>
+        </details>`).join("")}
+    </div>`;
+
+  app.querySelectorAll(".place-check").forEach(input => input.addEventListener("change", () => {
+    const place = state.localizaciones.find(item => item.id === input.dataset.id);
+    place.visitado = input.checked;
+    place.fechaVisita = input.checked ? new Date().toISOString().slice(0, 10) : null;
+    place.estado = input.checked ? "visitado" : "pendiente";
+    persist(); render(); showToast(input.checked ? "Localización visitada ✓" : "Localización reabierta");
+  }));
+  app.querySelectorAll(".edit-place").forEach(button => button.addEventListener("click", () => openPlaceForm(state.localizaciones.find(item => item.id === button.dataset.id))));
+  app.querySelectorAll(".delete-place").forEach(button => button.addEventListener("click", () => {
+    state.localizaciones = state.localizaciones.filter(item => item.id !== button.dataset.id);
+    persist(); render(); showToast("Localización eliminada");
+  }));
+}
+
 function renderGlobalProgress() {
   const outfit = state.cosplays.flatMap(item => item.outfit);
   const activities = state.ubicaciones.flatMap(item => item.actividades);
-  const done = outfit.filter(item => item.completado).length + activities.filter(item => item.completado).length;
-  const total = outfit.length + activities.length;
+  const places = state.localizaciones || [];
+  const done = outfit.filter(item => item.completado).length + activities.filter(item => item.completado).length + places.filter(item => item.visitado).length;
+  const total = outfit.length + activities.length + places.length;
   globalProgressText.textContent = `${done} / ${total}`;
   globalProgressBar.style.width = `${percentage(done, total)}%`;
+}
+
+function openCosplayForm() {
+  openForm("Nuevo cosplay", [
+    field("nombre", "Nombre del cosplay", "text", "", true),
+    textareaField("outfit", "Piezas del outfit, separadas por comas", "Peluca, Chaqueta, Camiseta, Pantalones, Botas")
+  ], data => {
+    const pieces = data.outfit
+      .split(",")
+      .map(value => value.trim())
+      .filter(Boolean);
+
+    const usedPieceIds = new Set();
+    const outfit = pieces.map((nombre, index) => {
+      const base = createId(nombre) || `pieza-${index + 1}`;
+      let id = base;
+      let suffix = 2;
+      while (usedPieceIds.has(id)) id = `${base}-${suffix++}`;
+      usedPieceIds.add(id);
+      return { id, nombre, completado: false, fechaCompletado: null };
+    });
+
+    state.cosplays.push({
+      id: uniqueCosplayId(createId(data.nombre)),
+      nombre: data.nombre.trim(),
+      outfit,
+      photoshoots: []
+    });
+    persist();
+    render();
+    showToast("Cosplay añadido");
+  });
 }
 
 function openShootForm(cosplay, shoot = null) {
@@ -334,6 +438,32 @@ function openActivityForm(locationId, activity = null) {
   });
 }
 
+function openPlaceForm(place = null) {
+  openForm(place ? "Editar localización" : "Nueva localización", [
+    field("nombre", "Nombre", "text", place?.nombre || "", true),
+    field("zona", "Zona / municipio", "text", place?.zona || "Asturias"),
+    field("tipos", "Tipos separados por comas", "text", place?.tipos?.join(", ") || "photoshoot"),
+    selectField("estado", "Estado", ["por-investigar", "pendiente", "visitado", "descartado"], place?.estado || "por-investigar"),
+    field("mapsUrl", "Enlace de Google Maps para el móvil", "url", place?.mapsUrl || ""),
+    field("embedUrl", "URL embed de Google Maps", "url", place?.embedUrl || ""),
+    textareaField("notas", "Notas", place?.notas || ""),
+    textareaField("ideas", "Ideas de sesión", place?.ideas || ""),
+    textareaField("advertencias", "Acceso y seguridad", place?.advertencias || "")
+  ], data => {
+    const record = {
+      id: place?.id || uniquePlaceId(createId(data.nombre)),
+      nombre: data.nombre, zona: data.zona,
+      tipos: data.tipos.split(",").map(value => value.trim().toLowerCase()).filter(Boolean),
+      estado: data.estado, visitado: data.estado === "visitado" || place?.visitado || false,
+      fechaVisita: place?.fechaVisita || null, notas: data.notas, ideas: data.ideas, advertencias: data.advertencias,
+      mapsUrl: data.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.nombre + " " + data.zona + " Asturias")}`,
+      embedUrl: data.embedUrl || `https://www.google.com/maps?q=${encodeURIComponent(data.nombre + ", " + data.zona + ", Asturias")}&output=embed`
+    };
+    if (place) Object.assign(place, record); else state.localizaciones.push(record);
+    persist(); render(); showToast("Localización guardada");
+  });
+}
+
 function openForm(title, fields, handler) {
   dialogTitle.textContent = title;
   formFields.innerHTML = fields.join("");
@@ -357,7 +487,7 @@ function closeDialog() {
 }
 
 function exportState() {
-  const blob = new Blob([JSON.stringify({ version: 1, exportedAt: new Date().toISOString(), cosplays: state.cosplays, ubicaciones: state.ubicaciones }, null, 2)], { type: "application/json" });
+  const blob = new Blob([JSON.stringify({ version: 2, exportedAt: new Date().toISOString(), cosplays: state.cosplays, ubicaciones: state.ubicaciones, localizaciones: state.localizaciones }, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
@@ -375,6 +505,7 @@ async function importState(event) {
     if (!Array.isArray(imported.cosplays) || !Array.isArray(imported.ubicaciones)) throw new Error("Formato de backup no válido.");
     state.cosplays = imported.cosplays;
     state.ubicaciones = imported.ubicaciones;
+    if (Array.isArray(imported.localizaciones)) state.localizaciones = imported.localizaciones;
     state.selectedCosplayId = null;
     persist(); render(); showToast("Backup importado");
   } catch (error) {
@@ -408,11 +539,19 @@ function createId(value) {
   return value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || `item-${Date.now()}`;
 }
 
+function uniqueCosplayId(base) {
+  let id = base, suffix = 2;
+  while (state.cosplays.some(item => item.id === id)) id = `${base}-${suffix++}`;
+  return id;
+}
+
 function uniqueLocationId(base) {
   let id = base, suffix = 2;
   while (state.ubicaciones.some(item => item.id === id)) id = `${base}-${suffix++}`;
   return id;
 }
+
+function uniquePlaceId(base) { let id = base, suffix = 2; while (state.localizaciones.some(item => item.id === id)) id = `${base}-${suffix++}`; return id; }
 
 function uniqueActivityId(location, base) {
   let id = base, suffix = 2;

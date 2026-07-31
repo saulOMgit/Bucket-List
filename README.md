@@ -23,3 +23,6 @@ Después abre `http://localhost:8000`.
 ## Migración futura
 
 La persistencia está centralizada en `persist()` y la carga inicial en `init()`. Para Firebase, sustituye esas dos piezas por un repositorio asíncrono, manteniendo el objeto `state` y las funciones de renderizado.
+
+## Pestaña Localizaciones
+Incluye un catálogo ampliable de lugares de Asturias para photoshoots y exploración urbana, con filtros, estado de visita, notas, advertencias, mapa embebido y enlace directo a Google Maps para el móvil. Los datos iniciales están en `data/localizaciones.json`.
