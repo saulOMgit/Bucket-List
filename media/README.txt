@@ -8,16 +8,48 @@ PANEL DE SONIDOS
 
 [
   {
-    "id": "airhorn",
-    "nombre": "Air Horn",
-    "archivo": "airhorn.ogg",
-    "emoji": "📢"
+    "id": "avoy",
+    "nombre": "Avoy!",
+    "archivo": "avoy.wav",
+    "emoji": "🦆"
   },
   {
-    "id": "bruh",
-    "nombre": "Bruh",
-    "archivo": "bruh.mp3",
-    "emoji": "💀"
+    "id": "caradeculo",
+    "nombre": "Cara de Culo",
+    "archivo": "caradeculo.ogg",
+    "emoji": "🍑"
+  },
+  {
+    "id": "diversionpurapajarito",
+    "nombre": "Diversion pura pajarito",
+    "archivo": "DiversinPuraPajarito.ogg",
+    "emoji": "🐦"
+  }
+  ,
+  {
+    "id": "lamusicamemueve",
+    "nombre": "Musica",
+    "archivo": "LaMusicaMemueve.ogg",
+    "emoji": "🎵"
+  },
+  {
+    "id": "locaptas",
+    "nombre": "Lo captas",
+    "archivo": "locaptas.wav",
+    "emoji": "🤔"
+  }
+  ,
+  {
+    "id": "Virgo",
+    "nombre": "Virgo",
+    "archivo": "TremendoVirgo.ogg",
+    "emoji": "♍"
+  },
+  {
+    "id": "ushanka",
+    "nombre": "Ushanka",
+    "archivo": "ushanka.ogg",
+    "emoji": "🪲"
   }
 ]
 
