@@ -1,4 +1,5 @@
 const STORAGE_KEY = "bucketListNotebookStateV1";
+const viewOrder = ["cosplays", "actividades", "localizaciones", "sonidos"];
 
 const app = document.querySelector("#app");
 const tabs = [...document.querySelectorAll(".tab")];
@@ -8,6 +9,7 @@ const backButton = document.querySelector("#backButton");
 const addCosplayButton = document.querySelector("#addCosplayButton");
 const addLocationButton = document.querySelector("#addLocationButton");
 const addPlaceButton = document.querySelector("#addPlaceButton");
+const reloadSoundsButton = document.querySelector("#reloadSoundsButton");
 const previousButton = document.querySelector("#previousButton");
 const nextButton = document.querySelector("#nextButton");
 const pageNumber = document.querySelector("#pageNumber");
@@ -30,40 +32,97 @@ let state = {
   placeFilter: "todos",
   cosplays: [],
   ubicaciones: [],
-  localizaciones: []
+  localizaciones: [],
+  sonidos: []
 };
 
 let activeFormHandler = null;
-
-init();
+const audioPlayer = new Audio();
+let activeSoundId = null;
 
 async function init() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      state = { ...state, ...JSON.parse(saved) };
-    } else {
-      const [cosplaysResponse, actividadesResponse, localizacionesResponse] = await Promise.all([
-        fetch("data/cosplays.json"),
-        fetch("data/actividades.json"),
-        fetch("data/localizaciones.json")
-      ]);
-      if (!cosplaysResponse.ok || !actividadesResponse.ok || !localizacionesResponse.ok) throw new Error("No se pudieron cargar los datos iniciales.");
-      state.cosplays = await cosplaysResponse.json();
-      state.ubicaciones = await actividadesResponse.json();
-      state.localizaciones = await localizacionesResponse.json();
-      persist();
-    }
-    if (!Array.isArray(state.localizaciones) || !state.localizaciones.length) {
-      const response = await fetch("data/localizaciones.json");
-      if (response.ok) state.localizaciones = await response.json();
-      persist();
-    }
+    await loadInitialState();
+    normalizeState();
     bindEvents();
     render();
   } catch (error) {
-    app.innerHTML = `<p class="empty-note">${escapeHtml(error.message)} Abre el proyecto con un servidor local, por ejemplo: <code>python -m http.server</code>.</p>`;
+    console.error("Error al iniciar Bucket List:", error);
+    const serverHint = location.protocol === "file:"
+      ? ' Abre el proyecto con un servidor local, por ejemplo: <code>python -m http.server</code>.'
+      : "";
+    app.innerHTML = `<p class="empty-note"><strong>No se pudo iniciar el cuaderno.</strong><br>${escapeHtml(error?.message || "Error desconocido.")}${serverHint}</p>`;
   }
+}
+
+async function loadInitialState() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+
+  if (saved) {
+    try {
+      state = { ...state, ...JSON.parse(saved) };
+    } catch (error) {
+      console.warn("El estado guardado no era válido; se cargarán los datos iniciales.", error);
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  }
+
+  const needsCosplays = !Array.isArray(state.cosplays) || state.cosplays.length === 0;
+  const needsActivities = !Array.isArray(state.ubicaciones) || state.ubicaciones.length === 0;
+  const needsPlaces = !Array.isArray(state.localizaciones) || state.localizaciones.length === 0;
+
+  const requests = [];
+  if (needsCosplays) requests.push(fetchJson("data/cosplays.json").then(data => { state.cosplays = data; }));
+  if (needsActivities) requests.push(fetchJson("data/actividades.json").then(data => { state.ubicaciones = data; }));
+  if (needsPlaces) requests.push(fetchJson("data/localizaciones.json").then(data => { state.localizaciones = data; }));
+
+  await Promise.all(requests);
+  await loadSoundsManifest();
+  persist();
+}
+
+async function loadSoundsManifest() {
+  try {
+    const manifest = await fetchJson("media/sonidos.json");
+    if (!Array.isArray(manifest)) throw new Error("media/sonidos.json debe contener un array.");
+    state.sonidos = manifest
+      .filter(item => item && typeof item.nombre === "string" && typeof item.archivo === "string")
+      .map((item, index) => ({
+        id: String(item.id || createId(item.nombre) || `sonido-${index + 1}`),
+        nombre: item.nombre.trim(),
+        archivo: item.archivo.trim(),
+        emoji: String(item.emoji || "🔊")
+      }));
+  } catch (error) {
+    console.warn("No se pudo cargar el panel de sonidos:", error);
+    state.sonidos = [];
+  }
+}
+
+async function fetchJson(path) {
+  const response = await fetch(path, { cache: "no-store" });
+  if (!response.ok) throw new Error(`No se pudo cargar ${path} (${response.status}).`);
+  return response.json();
+}
+
+function normalizeState() {
+  if (!viewOrder.includes(state.currentView)) state.currentView = "cosplays";
+  if (!Array.isArray(state.cosplays)) state.cosplays = [];
+  if (!Array.isArray(state.ubicaciones)) state.ubicaciones = [];
+  if (!Array.isArray(state.localizaciones)) state.localizaciones = [];
+  if (!Array.isArray(state.sonidos)) state.sonidos = [];
+  if (typeof state.activityFilter !== "string") state.activityFilter = "todos";
+  if (typeof state.placeFilter !== "string") state.placeFilter = "todos";
+  state.selectedCosplayId = null;
+
+  state.cosplays.forEach(cosplay => {
+    if (!Array.isArray(cosplay.outfit)) cosplay.outfit = [];
+    if (!Array.isArray(cosplay.photoshoots)) cosplay.photoshoots = [];
+  });
+
+  state.ubicaciones.forEach(location => {
+    if (!Array.isArray(location.actividades)) location.actividades = [];
+  });
 }
 
 function bindEvents() {
@@ -76,6 +135,7 @@ function bindEvents() {
   addCosplayButton.addEventListener("click", openCosplayForm);
   addLocationButton.addEventListener("click", openLocationForm);
   addPlaceButton.addEventListener("click", () => openPlaceForm());
+  reloadSoundsButton.addEventListener("click", reloadSounds);
   exportButton.addEventListener("click", exportState);
   importInput.addEventListener("change", importState);
   closeDialogButton.addEventListener("click", closeDialog);
@@ -85,13 +145,13 @@ function bindEvents() {
 }
 
 function switchView(view) {
+  if (state.currentView === "sonidos" && view !== "sonidos") stopSound();
   state.currentView = view;
   state.selectedCosplayId = null;
   persist();
   render();
 }
 
-const viewOrder = ["cosplays", "actividades", "localizaciones"];
 function navigatePrevious() { const index = viewOrder.indexOf(state.currentView); switchView(viewOrder[(index - 1 + viewOrder.length) % viewOrder.length]); }
 function navigateNext() { const index = viewOrder.indexOf(state.currentView); switchView(viewOrder[(index + 1) % viewOrder.length]); }
 
@@ -109,8 +169,9 @@ function render() {
   addCosplayButton.classList.toggle("hidden", state.currentView !== "cosplays" || Boolean(state.selectedCosplayId));
   addLocationButton.classList.toggle("hidden", state.currentView !== "actividades");
   addPlaceButton.classList.toggle("hidden", state.currentView !== "localizaciones");
+  reloadSoundsButton.classList.toggle("hidden", state.currentView !== "sonidos");
   backButton.classList.toggle("hidden", !(state.currentView === "cosplays" && state.selectedCosplayId));
-  pageNumber.textContent = `Página ${viewOrder.indexOf(state.currentView) + 1}/3`;
+  pageNumber.textContent = `Página ${viewOrder.indexOf(state.currentView) + 1}/${viewOrder.length}`;
 
   app.classList.remove("page-turn");
   void app.offsetWidth;
@@ -118,7 +179,8 @@ function render() {
 
   if (state.currentView === "cosplays") renderCosplays();
   else if (state.currentView === "actividades") renderActivities();
-  else renderPlaces();
+  else if (state.currentView === "localizaciones") renderPlaces();
+  else renderSounds();
 
   renderGlobalProgress();
 }
@@ -145,7 +207,9 @@ function renderCosplays() {
             <h3>${escapeHtml(cosplay.nombre)}</h3>
             <p class="card-meta">Outfit ${done}/${total} · Photoshoots hechos: ${shootsDone}</p>
             <div class="mini-progress" aria-label="${done} de ${total} piezas completadas"><span style="width:${percentage(done, total)}%"></span></div>
-            <div class="card-actions"><button class="paper-button open-cosplay" data-id="${escapeAttr(cosplay.id)}">Abrir ficha →</button></div>
+            <div class="card-actions">
+              <button class="paper-button open-cosplay" data-id="${escapeAttr(cosplay.id)}" type="button">Abrir ficha →</button>
+            </div>
           </article>`;
       }).join("")}
     </div>`;
@@ -163,7 +227,10 @@ function renderCosplayDetail(cosplay) {
     <article class="detail-sheet">
       <div class="section-heading">
         <div><h2>${escapeHtml(cosplay.nombre)}</h2><p>Outfit ${done}/${cosplay.outfit.length}</p></div>
-        <button class="paper-button" id="addShootButton">+ Photoshoot</button>
+        <div class="heading-actions">
+          <button class="paper-button" id="addShootButton" type="button">+ Photoshoot</button>
+          <button class="paper-button subtle danger-button" id="deleteCosplayButton" type="button">Eliminar cosplay</button>
+        </div>
       </div>
       <div class="detail-columns">
         <section>
@@ -219,6 +286,7 @@ function renderCosplayDetail(cosplay) {
   }));
 
   document.querySelector("#addShootButton").addEventListener("click", () => openShootForm(cosplay));
+  document.querySelector("#deleteCosplayButton").addEventListener("click", () => deleteCosplay(cosplay.id));
   app.querySelectorAll(".edit-shoot").forEach(button => button.addEventListener("click", () => openShootForm(cosplay, cosplay.photoshoots.find(item => item.id === button.dataset.id))));
   app.querySelectorAll(".delete-shoot").forEach(button => button.addEventListener("click", () => {
     cosplay.photoshoots = cosplay.photoshoots.filter(item => item.id !== button.dataset.id);
@@ -337,6 +405,121 @@ function renderPlaces() {
     state.localizaciones = state.localizaciones.filter(item => item.id !== button.dataset.id);
     persist(); render(); showToast("Localización eliminada");
   }));
+}
+
+function renderSounds() {
+  app.innerHTML = `
+    <div class="section-heading">
+      <div><h2>Sonidos</h2><p>Botonera meme cargada desde <code>media/sonidos.json</code>.</p></div>
+    </div>
+    ${state.sonidos.length ? `
+      <div class="sound-toolbar">
+        <p>Pulsa un botón para reproducirlo desde el principio.</p>
+        <button class="paper-button subtle" id="stopSoundButton" type="button">■ Parar sonido</button>
+      </div>
+      <div class="soundboard">
+        ${state.sonidos.map(sound => `
+          <button class="sound-button" type="button" data-sound-id="${escapeAttr(sound.id)}" aria-label="Reproducir ${escapeAttr(sound.nombre)}">
+            <span class="sound-icon" aria-hidden="true">${escapeHtml(sound.emoji)}</span>
+            <span>${escapeHtml(sound.nombre)}</span>
+          </button>`).join("")}
+      </div>` : `
+      <div class="empty-note sound-help">
+        <strong>La botonera está preparada.</strong>
+        <p>Mete tus archivos <code>.ogg</code>, <code>.mp3</code> o <code>.wav</code> dentro de <code>media/</code> y añádelos a <code>media/sonidos.json</code>.</p>
+        <pre>[
+  {
+    "id": "mi-sonido",
+    "nombre": "Mi sonido",
+    "archivo": "mi-sonido.ogg",
+    "emoji": "📢"
+  }
+]</pre>
+      </div>`}`;
+
+  app.querySelectorAll(".sound-button").forEach(button => button.addEventListener("click", () => {
+    const sound = state.sonidos.find(item => item.id === button.dataset.soundId);
+    if (sound) playSound(sound);
+  }));
+  document.querySelector("#stopSoundButton")?.addEventListener("click", stopSound);
+}
+
+async function reloadSounds() {
+  await loadSoundsManifest();
+  persist();
+  render();
+  showToast(state.sonidos.length ? "Sonidos recargados" : "No hay sonidos configurados");
+}
+
+function playSound(sound) {
+  const source = soundFileUrl(sound.archivo);
+  if (!source) {
+    showToast("Ruta de sonido no válida");
+    return;
+  }
+
+  audioPlayer.pause();
+  audioPlayer.currentTime = 0;
+  audioPlayer.src = source;
+  activeSoundId = sound.id;
+  updateSoundButtons();
+
+  audioPlayer.play().catch(error => {
+    console.error("No se pudo reproducir el sonido:", error);
+    activeSoundId = null;
+    updateSoundButtons();
+    showToast("No se pudo reproducir el archivo");
+  });
+}
+
+function stopSound() {
+  audioPlayer.pause();
+  audioPlayer.currentTime = 0;
+  activeSoundId = null;
+  updateSoundButtons();
+}
+
+function updateSoundButtons() {
+  app.querySelectorAll(".sound-button").forEach(button => {
+    const isPlaying = button.dataset.soundId === activeSoundId && !audioPlayer.paused;
+    button.classList.toggle("playing", isPlaying);
+    button.setAttribute("aria-pressed", String(isPlaying));
+  });
+}
+
+function soundFileUrl(file) {
+  try {
+    const mediaRoot = new URL("media/", location.href);
+    const cleanFile = String(file || "").replace(/^\/?media\//i, "");
+    const url = new URL(cleanFile, mediaRoot);
+    if (url.origin !== mediaRoot.origin || !url.href.startsWith(mediaRoot.href)) return "";
+    return url.href;
+  } catch {
+    return "";
+  }
+}
+
+audioPlayer.addEventListener("ended", () => {
+  activeSoundId = null;
+  updateSoundButtons();
+});
+
+audioPlayer.addEventListener("error", () => {
+  activeSoundId = null;
+  updateSoundButtons();
+});
+
+function deleteCosplay(cosplayId) {
+  const cosplay = state.cosplays.find(item => item.id === cosplayId);
+  if (!cosplay) return;
+  const confirmed = window.confirm(`¿Eliminar el cosplay "${cosplay.nombre}"? También se borrarán su outfit y sus photoshoots.`);
+  if (!confirmed) return;
+
+  state.cosplays = state.cosplays.filter(item => item.id !== cosplayId);
+  if (state.selectedCosplayId === cosplayId) state.selectedCosplayId = null;
+  persist();
+  render();
+  showToast("Cosplay eliminado");
 }
 
 function renderGlobalProgress() {
@@ -487,7 +670,7 @@ function closeDialog() {
 }
 
 function exportState() {
-  const blob = new Blob([JSON.stringify({ version: 2, exportedAt: new Date().toISOString(), cosplays: state.cosplays, ubicaciones: state.ubicaciones, localizaciones: state.localizaciones }, null, 2)], { type: "application/json" });
+  const blob = new Blob([JSON.stringify({ version: 3, exportedAt: new Date().toISOString(), cosplays: state.cosplays, ubicaciones: state.ubicaciones, localizaciones: state.localizaciones }, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
@@ -516,7 +699,15 @@ async function importState(event) {
 }
 
 function persist() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  const persistentState = {
+    currentView: state.currentView,
+    activityFilter: state.activityFilter,
+    placeFilter: state.placeFilter,
+    cosplays: state.cosplays,
+    ubicaciones: state.ubicaciones,
+    localizaciones: state.localizaciones
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(persistentState));
 }
 
 function findActivity(locationId, activityId) {
@@ -581,4 +772,15 @@ function showToast(message) {
   toast.classList.add("show");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+}
+
+
+function bootstrap() {
+  init();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bootstrap, { once: true });
+} else {
+  bootstrap();
 }
