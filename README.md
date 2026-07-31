@@ -26,3 +26,10 @@ La persistencia está centralizada en `persist()` y la carga inicial en `init()`
 
 ## Pestaña Localizaciones
 Incluye un catálogo ampliable de lugares de Asturias para photoshoots y exploración urbana, con filtros, estado de visita, notas, advertencias, mapa embebido y enlace directo a Google Maps para el móvil. Los datos iniciales están en `data/localizaciones.json`.
+
+
+## Eliminar cosplays
+Cada tarjeta de cosplay y su ficha de detalle incluyen una acción de eliminación con confirmación. Al eliminarlo también se eliminan su outfit y sus photoshoots guardados.
+
+## Pestaña Sonidos
+La pestaña **Sonidos** carga su botonera desde `media/sonidos.json`. Copia los archivos `.ogg`, `.mp3` o `.wav` dentro de `media/` y añade una entrada en el manifiesto por cada botón. Hay un ejemplo completo en `media/README.txt`.

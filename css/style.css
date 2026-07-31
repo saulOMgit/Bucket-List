@@ -279,3 +279,35 @@ input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--blue); }
 .place-card.completed summary strong { text-decoration: line-through 2px var(--red); }
 .place-card.completed::after { content: "VISITED"; position: absolute; }
 @media (max-width: 620px) { .place-card summary { align-items: flex-start; flex-direction: column; } .place-tags { justify-content: flex-start; } .place-map iframe { height: 250px; } }
+
+
+/* Cuarta pestaña: sonidos */
+.tab:nth-child(4) { background: #d7b6d8; transform: rotate(.7deg); }
+.heading-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.danger-button { color: var(--red); border-color: rgba(180,76,76,.65); }
+.danger-button:hover { background: rgba(180,76,76,.12); }
+.sound-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; }
+.sound-toolbar p { margin: 0; color: var(--ink-soft); }
+.soundboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 16px; }
+.sound-button {
+  min-height: 115px;
+  border: 1px solid rgba(38,49,66,.42);
+  padding: 16px 12px;
+  color: var(--ink);
+  background: rgba(255,255,255,.72);
+  box-shadow: 4px 5px 0 rgba(58,45,27,.17);
+  font: 700 1.35rem "Caveat", cursive;
+  transform: rotate(-.6deg);
+  transition: transform .14s ease, background .14s ease, box-shadow .14s ease;
+}
+.sound-button:nth-child(even) { transform: rotate(.7deg); background: rgba(242,220,116,.62); }
+.sound-button:hover { transform: translateY(-2px) rotate(0); }
+.sound-button.playing { background: rgba(169,201,216,.8); box-shadow: 2px 2px 0 rgba(58,45,27,.2); transform: translateY(2px); }
+.sound-icon { display: block; margin-bottom: 8px; font-size: 2rem; }
+.sound-help { text-align: left; }
+.sound-help p { margin: 8px 0; }
+.sound-help pre { overflow-x: auto; padding: 12px; border: 1px dashed rgba(38,49,66,.35); background: rgba(255,255,255,.35); font: .85rem/1.4 monospace; }
+@media (max-width: 620px) {
+  .heading-actions, .sound-toolbar { align-items: stretch; flex-direction: column; }
+  .soundboard { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
