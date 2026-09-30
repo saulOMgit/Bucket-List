@@ -42,5 +42,11 @@
     "nombre": "Ushanka",
     "archivo": "ushanka.ogg",
     "emoji": "🪲"
+  },
+  {
+    "id": "guarra",
+    "nombre": "Guarra",
+    "archivo": "guarra.ogg",
+    "emoji": "🐱"
   }
 ]
