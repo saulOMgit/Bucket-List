@@ -1,167 +1,497 @@
-[
-  {
-    "id": "claire",
-    "nombre": "Claire",
-    "outfit": [
-      {
-        "id": "peluca",
-        "nombre": "Peluca",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "chaqueta",
-        "nombre": "Chaqueta",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "camiseta",
-        "nombre": "Camiseta",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "pantalones",
-        "nombre": "Pantalones",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "botas",
-        "nombre": "Botas",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "arma-replica",
-        "nombre": "Arma (réplica)",
-        "completado": false,
-        "fechaCompletado": null
-      }
-    ],
-    "photoshoots": []
-  },
-  {
-    "id": "jill",
-    "nombre": "Jill",
-    "outfit": [
-      {
-        "id": "peluca",
-        "nombre": "Peluca",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "top",
-        "nombre": "Top",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "pantalones",
-        "nombre": "Pantalones",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "botas",
-        "nombre": "Botas",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "holster",
-        "nombre": "Holster",
-        "completado": false,
-        "fechaCompletado": null
-      }
-    ],
-    "photoshoots": []
-  },
-  {
-    "id": "ashley",
-    "nombre": "Ashley",
-    "outfit": [
-      {
-        "id": "peluca",
-        "nombre": "Peluca",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "vestido",
-        "nombre": "Vestido",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "zapatos",
-        "nombre": "Zapatos",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "chaleco",
-        "nombre": "Chaleco",
-        "completado": false,
-        "fechaCompletado": null
-      }
-    ],
-    "photoshoots": [
-      {
-        "id": "la-laboral",
-        "titulo": "La Laboral",
-        "fecha": "pendiente",
-        "notas": "",
-        "ubicacion": "La Laboral, Gijón",
-        "mapsUrl": "https://maps.app.goo.gl/ooeqZPKHsYCjRNAz9",
-        "estado": "planificado",
-        "mapsEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4011.701391010507!2d-5.614514!3d43.5243331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd367b1a200bd50f%3A0x88711636275e0532!2sLaboral%20Ciudad%20de%20la%20Cultura!5e1!3m2!1sen!2ses!4v1785420544766!5m2!1sen!2ses"
-      }
-    ]
-  },
-  {
-    "id": "chloe",
-    "nombre": "Chloe",
-    "outfit": [
-      {
-        "id": "peluca-azul",
-        "nombre": "Peluca azul",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "chaqueta",
-        "nombre": "Chaqueta",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "camiseta",
-        "nombre": "Camiseta",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "pantalones",
-        "nombre": "Pantalones",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "botas",
-        "nombre": "Botas",
-        "completado": false,
-        "fechaCompletado": null
-      },
-      {
-        "id": "gorra",
-        "nombre": "Gorra",
-        "completado": false,
-        "fechaCompletado": null
-      }
-    ],
-    "photoshoots": []
-  }
-]
+{
+  "version": 3,
+  "exportedAt": "2026-10-05T19:03:02.474Z",
+  "cosplays": [
+    {
+      "id": "claire",
+      "nombre": "Claire",
+      "outfit": [
+        {
+          "id": "peluca",
+          "nombre": "Peluca",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "chaqueta",
+          "nombre": "Chaqueta",
+          "completado": true,
+          "fechaCompletado": "2026-08-12T13:11:03.491Z"
+        },
+        {
+          "id": "camiseta",
+          "nombre": "Camiseta",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "pantalones",
+          "nombre": "Pantalones",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "botas",
+          "nombre": "Botas",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "arma-replica",
+          "nombre": "Arma (réplica)",
+          "completado": false,
+          "fechaCompletado": null
+        }
+      ],
+      "photoshoots": []
+    },
+    {
+      "id": "jill",
+      "nombre": "Jill",
+      "outfit": [
+        {
+          "id": "peluca",
+          "nombre": "Peluca",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "top",
+          "nombre": "Top",
+          "completado": true,
+          "fechaCompletado": "2026-08-12T13:11:12.776Z"
+        },
+        {
+          "id": "pantalones",
+          "nombre": "Pantalones",
+          "completado": true,
+          "fechaCompletado": "2026-08-12T13:11:16.104Z"
+        },
+        {
+          "id": "botas",
+          "nombre": "Botas",
+          "completado": true,
+          "fechaCompletado": "2026-08-12T13:11:20.429Z"
+        },
+        {
+          "id": "holster",
+          "nombre": "Holster",
+          "completado": true,
+          "fechaCompletado": "2026-08-12T13:11:14.268Z"
+        }
+      ],
+      "photoshoots": []
+    },
+    {
+      "id": "ashley",
+      "nombre": "Ashley",
+      "outfit": [
+        {
+          "id": "peluca",
+          "nombre": "Peluca",
+          "completado": true,
+          "fechaCompletado": "2026-08-12T13:11:25.145Z"
+        },
+        {
+          "id": "vestido",
+          "nombre": "Vestido",
+          "completado": true,
+          "fechaCompletado": "2026-08-13T20:44:25.905Z"
+        },
+        {
+          "id": "zapatos",
+          "nombre": "Zapatos",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "chaleco",
+          "nombre": "Chaleco",
+          "completado": false,
+          "fechaCompletado": null
+        }
+      ],
+      "photoshoots": [
+        {
+          "id": "la-laboral",
+          "titulo": "La Laboral",
+          "fecha": "pendiente",
+          "notas": "",
+          "ubicacion": "La Laboral, Gijón",
+          "mapsUrl": "https://maps.app.goo.gl/ooeqZPKHsYCjRNAz9",
+          "estado": "planificado",
+          "mapsEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4011.701391010507!2d-5.614514!3d43.5243331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd367b1a200bd50f%3A0x88711636275e0532!2sLaboral%20Ciudad%20de%20la%20Cultura!5e1!3m2!1sen!2ses!4v1785420544766!5m2!1sen!2ses"
+        }
+      ]
+    },
+    {
+      "id": "chloe",
+      "nombre": "Chloe",
+      "outfit": [
+        {
+          "id": "peluca-azul",
+          "nombre": "Peluca azul",
+          "completado": true,
+          "fechaCompletado": "2026-08-09T18:05:47.827Z"
+        },
+        {
+          "id": "chaqueta",
+          "nombre": "Chaqueta",
+          "completado": true,
+          "fechaCompletado": "2026-08-09T18:05:19.868Z"
+        },
+        {
+          "id": "camiseta",
+          "nombre": "Camiseta",
+          "completado": true,
+          "fechaCompletado": "2026-08-09T18:05:20.594Z"
+        },
+        {
+          "id": "pantalones",
+          "nombre": "Pantalones",
+          "completado": true,
+          "fechaCompletado": "2026-08-09T18:05:21.138Z"
+        },
+        {
+          "id": "botas",
+          "nombre": "Botas",
+          "completado": true,
+          "fechaCompletado": "2026-08-09T18:05:39.315Z"
+        },
+        {
+          "id": "gorra",
+          "nombre": "Gorra",
+          "completado": true,
+          "fechaCompletado": "2026-08-09T18:05:23.005Z"
+        }
+      ],
+      "photoshoots": []
+    },
+    {
+      "id": "aqua",
+      "nombre": "Aqua",
+      "outfit": [
+        {
+          "id": "peluca",
+          "nombre": "Peluca",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "traje",
+          "nombre": "Traje",
+          "completado": false,
+          "fechaCompletado": null
+        }
+      ],
+      "photoshoots": []
+    },
+    {
+      "id": "gwen-lol",
+      "nombre": "Gwen (LoL)",
+      "outfit": [
+        {
+          "id": "peluca",
+          "nombre": "Peluca",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "vestido",
+          "nombre": "Vestido",
+          "completado": false,
+          "fechaCompletado": null
+        }
+      ],
+      "photoshoots": []
+    },
+    {
+      "id": "tiffa",
+      "nombre": "Tiffa",
+      "outfit": [
+        {
+          "id": "peluca",
+          "nombre": "Peluca",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "traje",
+          "nombre": "Traje",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "botas",
+          "nombre": "Botas",
+          "completado": false,
+          "fechaCompletado": null
+        }
+      ],
+      "photoshoots": []
+    },
+    {
+      "id": "malenia",
+      "nombre": "Malenia",
+      "outfit": [
+        {
+          "id": "peluca",
+          "nombre": "Peluca",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "chaqueta",
+          "nombre": "Chaqueta",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "camiseta",
+          "nombre": "Camiseta",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "pantalones",
+          "nombre": "Pantalones",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "botas",
+          "nombre": "Botas",
+          "completado": false,
+          "fechaCompletado": null
+        }
+      ],
+      "photoshoots": []
+    },
+    {
+      "id": "cheryl-mason",
+      "nombre": "Cheryl Mason",
+      "outfit": [
+        {
+          "id": "peluca",
+          "nombre": "Peluca",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "chaqueta",
+          "nombre": "Chaqueta",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "camiseta",
+          "nombre": "Camiseta",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "pantalones",
+          "nombre": "Pantalones",
+          "completado": false,
+          "fechaCompletado": null
+        },
+        {
+          "id": "botas",
+          "nombre": "Botas",
+          "completado": false,
+          "fechaCompletado": null
+        }
+      ],
+      "photoshoots": []
+    }
+  ],
+  "ubicaciones": [
+    {
+      "id": "madrid",
+      "nombre": "Madrid",
+      "tipoUbicacion": "ciudad",
+      "actividades": [
+        {
+          "id": "parque-atracciones-madrid",
+          "nombre": "Parque de Atracciones de Madrid",
+          "completado": true,
+          "fecha": "2026-09-15",
+          "notas": "",
+          "enlace": null,
+          "tipo": "parque"
+        },
+        {
+          "id": "warner",
+          "nombre": "Warner Bros Park",
+          "completado": true,
+          "fecha": "2026-09-15",
+          "notas": "",
+          "enlace": null,
+          "tipo": "parque"
+        }
+      ]
+    },
+    {
+      "id": "portaventura",
+      "nombre": "PortAventura",
+      "tipoUbicacion": "parque",
+      "actividades": [
+        {
+          "id": "visitar-portaventura",
+          "nombre": "Visitar PortAventura",
+          "completado": false,
+          "fecha": null,
+          "notas": "",
+          "enlace": null,
+          "tipo": "parque"
+        }
+      ]
+    },
+    {
+      "id": "terra-mitica",
+      "nombre": "Terra Mítica",
+      "tipoUbicacion": "parque",
+      "actividades": [
+        {
+          "id": "visitar-terra-mitica",
+          "nombre": "Visitar Terra Mítica",
+          "completado": false,
+          "fecha": null,
+          "notas": "",
+          "enlace": null,
+          "tipo": "parque"
+        }
+      ]
+    },
+    {
+      "id": "florencia",
+      "nombre": "Florencia",
+      "tipoUbicacion": "ciudad",
+      "actividades": []
+    },
+    {
+      "id": "lucca",
+      "nombre": "Lucca",
+      "tipoUbicacion": "ciudad",
+      "actividades": [
+        {
+          "id": "lucca-comics",
+          "nombre": "Lucca Comics",
+          "completado": false,
+          "fecha": null,
+          "notas": "",
+          "enlace": null,
+          "tipo": "comics"
+        }
+      ]
+    },
+    {
+      "id": "milan",
+      "nombre": "Milán",
+      "tipoUbicacion": "ciudad",
+      "actividades": []
+    },
+    {
+      "id": "verona",
+      "nombre": "Verona",
+      "tipoUbicacion": "ciudad",
+      "actividades": [
+        {
+          "id": "parque-atracciones-verona",
+          "nombre": "Parque de Atracciones de Verona",
+          "completado": false,
+          "fecha": null,
+          "notas": "",
+          "enlace": null,
+          "tipo": "parque"
+        }
+      ]
+    }
+  ],
+  "localizaciones": [
+    {
+      "id": "la-laboral",
+      "nombre": "Laboral Ciudad de la Cultura",
+      "zona": "Gijón",
+      "tipos": [
+        "photoshoot"
+      ],
+      "estado": "pendiente",
+      "visitado": false,
+      "fechaVisita": null,
+      "notas": "Arquitectura monumental, patios, piedra y líneas simétricas.",
+      "advertencias": "Comprobar horarios y restricciones para sesiones fotográficas.",
+      "ideas": "Ashley y sesiones de estética clásica o académica.",
+      "mapsUrl": "https://maps.app.goo.gl/ooeqZPKHsYCjRNAz9",
+      "embedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4011.701391010507!2d-5.614514!3d43.5243331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd367b1a200bd50f%3A0x88711636275e0532!2sLaboral%20Ciudad%20de%20la%20Cultura!5e1!3m2!1sen!2ses!4v1785420544766!5m2!1sen!2ses"
+    },
+    {
+      "id": "fuso-de-la-reina",
+      "nombre": "Fuso de la Reina",
+      "zona": "Oviedo",
+      "tipos": [
+        "photoshoot",
+        "urbex"
+      ],
+      "estado": "por-investigar",
+      "visitado": false,
+      "fechaVisita": null,
+      "notas": "Entorno ferroviario y natural con posibilidades para sesiones exteriores.",
+      "advertencias": "Confirmar accesos permitidos y evitar cualquier zona ferroviaria activa o cerrada.",
+      "ideas": "Estética postapocalíptica, survival y urbana.",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Fuso+de+la+Reina+Asturias",
+      "embedUrl": "https://www.google.com/maps?q=Fuso%20de%20la%20Reina%2C%20Asturias&output=embed"
+    },
+    {
+      "id": "discoteca-jardin",
+      "nombre": "Discoteca Jardín",
+      "zona": "Asturias",
+      "tipos": [
+        "photoshoot",
+        "urbex"
+      ],
+      "estado": "por-investigar",
+      "visitado": false,
+      "fechaVisita": null,
+      "notas": "Posible localización de estética abandonada y decadente.",
+      "advertencias": "Verificar ubicación, propiedad, permisos y estado estructural antes de acercarse.",
+      "ideas": "Terror, Resident Evil y estética underground.",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Discoteca+Jardin+Asturias",
+      "embedUrl": "https://www.google.com/maps?q=Discoteca%20Jard%C3%ADn%2C%20Asturias&output=embed"
+    },
+    {
+      "id": "lieres-vias",
+      "nombre": "Lieres — vías de tren",
+      "zona": "Siero",
+      "tipos": [
+        "photoshoot",
+        "ferrocarril"
+      ],
+      "estado": "por-investigar",
+      "visitado": false,
+      "fechaVisita": null,
+      "notas": "Zona ferroviaria para estudiar como fondo fotográfico.",
+      "advertencias": "No entrar ni fotografiar sobre vías activas. Buscar únicamente espacios públicos y seguros.",
+      "ideas": "Road trip, western moderno o estética industrial.",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lieres+Siero+Asturias",
+      "embedUrl": "https://www.google.com/maps?q=Lieres%2C%20Siero%2C%20Asturias&output=embed"
+    },
+    {
+      "id": "perlora",
+      "nombre": "Ciudad Residencial de Perlora",
+      "zona": "Carreño",
+      "tipos": [
+        "urbex",
+        "photoshoot"
+      ],
+      "estado": "pendiente",
+      "visitado": false,
+      "fechaVisita": null,
+      "notas": "Arquitectura singular, costa y espacios con aspecto detenido en el tiempo.",
+      "advertencias": "Respetar cierres, señalización, propiedades y edificios no habilitados.",
+      "ideas": "Life is Strange, nostalgia, verano abandonado y retrato editorial.",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ciudad+Residencial+de+Perlora+Asturias",
+      "embedUrl": "https://www.google.com/maps?q=Ciudad%20Residencial%20de%20Perlora%2C%20Asturias&output=embed"
+    }
+  ]
+}
