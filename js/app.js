@@ -72,9 +72,9 @@ async function loadInitialState() {
   const needsPlaces = !Array.isArray(state.localizaciones) || state.localizaciones.length === 0;
 
   const requests = [];
-  if (needsCosplays) requests.push(fetchJson("data/cosplays.json").then(data => { state.cosplays = data; }));
-  if (needsActivities) requests.push(fetchJson("data/actividades.json").then(data => { state.ubicaciones = data; }));
-  if (needsPlaces) requests.push(fetchJson("data/localizaciones.json").then(data => { state.localizaciones = data; }));
+  if (needsCosplays) requests.push(fetchJson("data/cosplays.json").then(data => { state.cosplays = pickArray(data, "cosplays"); }));
+  if (needsActivities) requests.push(fetchJson("data/actividades.json").then(data => { state.ubicaciones = pickArray(data, "ubicaciones"); }));
+  if (needsPlaces) requests.push(fetchJson("data/localizaciones.json").then(data => { state.localizaciones = pickArray(data, "localizaciones"); }));
 
   await Promise.all(requests);
   await loadSoundsManifest();
@@ -103,6 +103,13 @@ async function fetchJson(path) {
   const response = await fetch(path, { cache: "no-store" });
   if (!response.ok) throw new Error(`No se pudo cargar ${path} (${response.status}).`);
   return response.json();
+}
+
+// Acepta tanto un array directo como un export completo ({ cosplays, ubicaciones, localizaciones }).
+function pickArray(data, key) {
+  if (Array.isArray(data)) return data;
+  if (data && Array.isArray(data[key])) return data[key];
+  throw new Error(`El formato de data/ no es válido: falta la lista "${key}".`);
 }
 
 function normalizeState() {
