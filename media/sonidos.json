@@ -48,5 +48,29 @@
     "nombre": "Guarra",
     "archivo": "guarra.ogg",
     "emoji": "🐱"
+  },
+  {
+    "id": "zorrrra",
+    "nombre": "Zorrrra",
+    "archivo": "zorrrra.ogg",
+    "emoji": "🦊"
+  },
+  {
+    "id": "PUM",
+    "nombre": "PUM",
+    "archivo": "pum.ogg",
+    "emoji": "💥"
+  },
+  {
+    "id": "buscalo",
+    "nombre": "Buscalo",
+    "archivo": "buscalo.ogg",
+    "emoji": "🧭"
+  },
+  {
+    "id": "⚠️",
+    "nombre": "⚠️",
+    "archivo": "witch.ogg",
+    "emoji": "⚠️"
   }
 ]
